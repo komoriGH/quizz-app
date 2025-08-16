@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-81:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\eabe35f1035c2efc13deb5437ebf385f\\transformed\\appcompat-1.6.1\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-81:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
+            "map": [
+                {
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\67257949cc132b94e5478ccc2630b34e\\transformed\\material-1.12.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "63",
+                        "endOffsets": "114"
+                    }
+                }
+            ]
+        }
+    ]
+}
