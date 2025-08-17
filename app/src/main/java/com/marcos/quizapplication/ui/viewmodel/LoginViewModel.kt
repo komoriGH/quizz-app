@@ -13,7 +13,7 @@ import javax.inject.Inject
 data class LoginUiState(
     val isLoading: Boolean = false,
     val loginSuccess: Boolean = false,
-    val registrationSuccess: Boolean = false, // Novo estado para sucesso do registro
+    val registrationSuccess: Boolean = false,
     val errorMessage: String? = null
 )
 
@@ -37,11 +37,12 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun signUp(email: String, password: String) {
+    // Modificado para aceitar e passar o username
+    fun signUp(username: String, email: String, password: String) {
         viewModelScope.launch {
-            // Poderia adicionar validação de email/senha aqui antes de chamar o repositório
             _uiState.update { it.copy(isLoading = true, errorMessage = null, loginSuccess = false, registrationSuccess = false) }
-            val result = authRepository.signUp(email, password) // Assumindo que signUp existe no repo
+            // Passar o username para o repositório
+            val result = authRepository.signUp(username, email, password)
             result.onSuccess {
                 _uiState.update { it.copy(isLoading = false, registrationSuccess = true) }
             }.onFailure { exception ->
@@ -54,7 +55,6 @@ class LoginViewModel @Inject constructor(
         _uiState.update { it.copy(errorMessage = null) }
     }
 
-    // Opcional: Uma função para resetar o estado de registrationSuccess após a navegação, por exemplo
     fun onRegistrationSuccessShown() {
         _uiState.update { it.copy(registrationSuccess = false) }
     }
