@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText // Mantenha se for usar para "Esqueceu a senha?" etc.
+// import androidx.compose.foundation.text.ClickableText // Mantenha se for usar para "Esqueceu a senha?" etc.
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,8 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.AnnotatedString // Mantenha se for usar
-import androidx.compose.ui.text.TextStyle // Mantenha se for usar
+// import androidx.compose.ui.text.AnnotatedString // Mantenha se for usar
+// import androidx.compose.ui.text.TextStyle // Mantenha se for usar
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -46,10 +46,10 @@ import com.marcos.quizapplication.ui.viewmodel.LoginUiState
 fun LoginScreen(
     uiState: LoginUiState,
     onSignInClick: (String, String) -> Unit,
-    onSignUpClick: (String, String) -> Unit, // Nova callback para registro
+    onSignUpClick: () -> Unit, // Alterado: não recebe mais email/password
     onErrorMessageShown: () -> Unit,
-    onLoginSuccess: () -> Unit,
-    onRegistrationSuccess: () -> Unit // Nova callback para sucesso do registro
+    onLoginSuccess: () -> Unit
+    // onRegistrationSuccess callback foi removido
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -66,21 +66,12 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.loginSuccess) {
         if (uiState.loginSuccess) {
-            // Idealmente, o ViewModel resetaria loginSuccess após a navegação
-            onLoginSuccess() // Navega para a tela principal
+            onLoginSuccess()
         }
     }
 
-    LaunchedEffect(uiState.registrationSuccess) {
-        if (uiState.registrationSuccess) {
-            Toast.makeText(context, "Registration successful! Please sign in.", Toast.LENGTH_LONG).show()
-            // Idealmente, o ViewModel resetaria registrationSuccess
-            onRegistrationSuccess() // Pode navegar para login ou limpar campos, etc.
-            // Poderia limpar os campos de email/senha aqui se desejado
-            // email = ""
-            // password = ""
-        }
-    }
+    // LaunchedEffect para uiState.registrationSuccess foi removido,
+    // pois essa lógica agora pertencerá à RegistrationScreen e seu ViewModel.
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -91,7 +82,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome to\nQuizMaster",
+                text = "Welcome to QuizMaster",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start,
@@ -99,7 +90,7 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Sign in or create an account", // Texto atualizado
+                text = "Sign in or create an account",
                 fontSize = 16.sp,
                 color = Color.Gray,
                 textAlign = TextAlign.Start,
@@ -130,14 +121,6 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Row para "Remember me" e "Forgot password" - vazio no seu código
-            // Row(
-            // modifier = Modifier.fillMaxWidth(),
-            // verticalAlignment = Alignment.CenterVertically,
-            // horizontalArrangement = Arrangement.SpaceBetween
-            // ) {
-            //
-            // }
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
@@ -145,27 +128,23 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                enabled = !uiState.isLoading && email.isNotBlank() && password.isNotBlank() // Melhor habilitar apenas se os campos não estiverem vazios
+                enabled = !uiState.isLoading && email.isNotBlank() && password.isNotBlank()
             ) {
                 Text("Sign in", fontSize = 16.sp)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botão de Registro
-            OutlinedButton( // Usando OutlinedButton para um visual diferente
-                onClick = { onSignUpClick(email, password) },
+            OutlinedButton(
+                onClick = onSignUpClick, // Alterado: chamada direta sem passar email/password
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                enabled = !uiState.isLoading && email.isNotBlank() && password.isNotBlank(), // Melhor habilitar apenas se os campos não estiverem vazios
+                enabled = !uiState.isLoading, // Email/password não são mais relevantes para habilitar este botão aqui
                 colors = ButtonDefaults.outlinedButtonColors()
             ) {
                 Text("Sign up", fontSize = 16.sp)
             }
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Você pode adicionar um ClickableText aqui para navegar para uma tela de registro separada se preferir
-            // Text("Don't have an account? Sign up here.", modifier = Modifier.clickable { /* navegue para tela de registro */ })
         }
 
         if (uiState.isLoading) {
@@ -180,9 +159,9 @@ fun LoginScreenPreview() {
     LoginScreen(
         uiState = LoginUiState(isLoading = false),
         onSignInClick = { _, _ -> },
-        onSignUpClick = { _, _ -> }, // Adicionado para o preview
+        onSignUpClick = {}, // Alterado para corresponder à nova assinatura
         onErrorMessageShown = {},
-        onLoginSuccess = {},
-        onRegistrationSuccess = {} // Adicionado para o preview
+        onLoginSuccess = {}
+        // onRegistrationSuccess = {} // Removido
     )
 }

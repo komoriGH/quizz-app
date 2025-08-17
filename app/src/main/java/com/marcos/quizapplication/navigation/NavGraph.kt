@@ -10,9 +10,12 @@ import androidx.navigation.compose.composable
 import com.marcos.quizapplication.ui.screens.HomeScreen
 import com.marcos.quizapplication.ui.screens.LoginScreen
 import com.marcos.quizapplication.ui.screens.QuizRoute
+import com.marcos.quizapplication.ui.screens.RegistrationScreen
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel
 import com.marcos.quizapplication.ui.viewmodel.LoginViewModel
 import com.marcos.quizapplication.ui.viewmodel.QuizViewModel
+import com.marcos.quizapplication.ui.viewmodel.RegistrationUiState // Importe se não estiver já
+import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel
 
 sealed class Screen(val route: String) {
     object Login : Screen("login_screen")
@@ -20,6 +23,7 @@ sealed class Screen(val route: String) {
     object Quiz : Screen("quiz_screen/{quizId}") {
         fun createRoute(quizId: String) = "quiz_screen/$quizId"
     }
+    object Registration : Screen("registration_screen")
 }
 
 @Composable
@@ -30,36 +34,52 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
     ) {
         composable(route = Screen.Login.route) {
             val loginViewModel: LoginViewModel = hiltViewModel()
-            // Usar collectAsStateWithLifecycle para coletar o estado de forma segura em relação ao ciclo de vida
             val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
             LoginScreen(
                 uiState = uiState,
                 onSignInClick = loginViewModel::signIn,
-                // Adicionando o callback para o clique no botão de registro
-                onSignUpClick = { email, password ->
-                    loginViewModel.signUp(email, password)
+                onSignUpClick = {
+                    navController.navigate(Screen.Registration.route)
                 },
                 onErrorMessageShown = loginViewModel::onErrorMessageShown,
                 onLoginSuccess = {
                     navController.navigate(Screen.Home.route) {
-                        // Limpa a pilha de volta até o destino inicial e o remove
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
                         }
-                        // Garante que não haja múltiplas cópias da tela Home
                         launchSingleTop = true
                     }
-                    // Você pode querer resetar o estado de loginSuccess no ViewModel aqui
-                    // loginViewModel.onLoginSuccessShown() // Se você adicionar essa função ao ViewModel
-                },
-                // Adicionando o callback para quando o registro for bem-sucedido
-                onRegistrationSuccess = {
-                    // Após o registro, você pode querer que o usuário faça login.
-                    // A LoginScreen já mostra um Toast.
-                    // Apenas resetamos o estado no ViewModel.
-                    loginViewModel.onRegistrationSuccessShown()
+                    // loginViewModel.onLoginSuccessShown()
                 }
+            )
+        }
+
+        composable(route = Screen.Registration.route) {
+            val registrationViewModel: RegistrationViewModel = hiltViewModel()
+            // Assumindo que seu RegistrationViewModel expõe um uiState e um método onErrorMessageShown
+            // Se os nomes forem diferentes, ajuste aqui.
+            val uiState by registrationViewModel.uiState.collectAsStateWithLifecycle()
+
+            RegistrationScreen(
+                uiState = uiState, // Passando o uiState
+                onRegisterClick = { email, password, confirmPassword ->
+                    registrationViewModel.signUp(email, password, confirmPassword)
+                },
+                onRegistrationSuccess = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Registration.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                    // Chame um método no ViewModel se precisar limpar o estado após o sucesso
+                    // registrationViewModel.onRegistrationHandled() ou similar
+                },
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onErrorMessageShown = registrationViewModel::onErrorMessageShown // Passando o callback
             )
         }
 
@@ -68,15 +88,13 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
             val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
             HomeScreen(
-                userName = uiState.userName, // Certifique-se de que HomeUiState tenha userName
+                userName = uiState.userName,
                 onLogout = {
-                    homeViewModel.onLogout() // ViewModel deve lidar com a lógica de signOut do repositório
+                    homeViewModel.onLogout()
                     navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Home.route) { // Pop até a Home para removê-la da pilha
+                        popUpTo(Screen.Home.route) {
                             inclusive = true
                         }
-                        // Ou, para limpar toda a pilha e tornar Login o novo topo:
-                        // popUpTo(navController.graph.id) { inclusive = true }
                         launchSingleTop = true
                     }
                 },
@@ -88,15 +106,12 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(route = Screen.Quiz.route) {
             val quizViewModel: QuizViewModel = hiltViewModel()
-            // Se QuizRoute espera um QuizViewModel e não um uiState diretamente, isso está ok.
-            // Se precisar de uiState, colete-o como nos outros composables.
             QuizRoute(
                 viewModel = quizViewModel,
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateHome = {
                     navController.navigate(Screen.Home.route) {
-                        // Pop até a tela de Quiz para removê-la e Home se tornar o topo
-                        popUpTo(Screen.Quiz.route) { // ou Screen.Quiz.createRoute(it.arguments?.getString("quizId") ?: "")
+                        popUpTo(Screen.Quiz.route) {
                             inclusive = true
                         }
                         launchSingleTop = true

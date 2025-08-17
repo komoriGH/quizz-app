@@ -4,6 +4,7 @@ import com.marcos.quizapplication.di.AuthModule;
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.LoginViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.MainViewModel_HiltModules;
+import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -161,7 +162,8 @@ public final class QuizApplication_HiltComponents {
           LoginViewModel_HiltModules.KeyModule.class,
           MainViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
-          ViewModelCBuilderModule.class
+          ViewModelCBuilderModule.class,
+          RegistrationViewModel_HiltModules.KeyModule.class
       }
   )
   @ActivityRetainedScoped
@@ -200,7 +202,8 @@ public final class QuizApplication_HiltComponents {
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           HomeViewModel_HiltModules.BindsModule.class,
           LoginViewModel_HiltModules.BindsModule.class,
-          MainViewModel_HiltModules.BindsModule.class
+          MainViewModel_HiltModules.BindsModule.class,
+          RegistrationViewModel_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

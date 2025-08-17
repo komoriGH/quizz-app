@@ -400,17 +400,17 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_marcos_quizapplication_ui_viewmodel_HomeViewModel = "com.marcos.quizapplication.ui.viewmodel.HomeViewModel";
-
       static String com_marcos_quizapplication_ui_viewmodel_LoginViewModel = "com.marcos.quizapplication.ui.viewmodel.LoginViewModel";
+
+      static String com_marcos_quizapplication_ui_viewmodel_HomeViewModel = "com.marcos.quizapplication.ui.viewmodel.HomeViewModel";
 
       static String com_marcos_quizapplication_ui_viewmodel_MainViewModel = "com.marcos.quizapplication.ui.viewmodel.MainViewModel";
 
       @KeepFieldType
-      HomeViewModel com_marcos_quizapplication_ui_viewmodel_HomeViewModel2;
+      LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
 
       @KeepFieldType
-      LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
+      HomeViewModel com_marcos_quizapplication_ui_viewmodel_HomeViewModel2;
 
       @KeepFieldType
       MainViewModel com_marcos_quizapplication_ui_viewmodel_MainViewModel2;
@@ -460,20 +460,20 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_marcos_quizapplication_ui_viewmodel_LoginViewModel = "com.marcos.quizapplication.ui.viewmodel.LoginViewModel";
+
       static String com_marcos_quizapplication_ui_viewmodel_MainViewModel = "com.marcos.quizapplication.ui.viewmodel.MainViewModel";
 
       static String com_marcos_quizapplication_ui_viewmodel_HomeViewModel = "com.marcos.quizapplication.ui.viewmodel.HomeViewModel";
 
-      static String com_marcos_quizapplication_ui_viewmodel_LoginViewModel = "com.marcos.quizapplication.ui.viewmodel.LoginViewModel";
+      @KeepFieldType
+      LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
 
       @KeepFieldType
       MainViewModel com_marcos_quizapplication_ui_viewmodel_MainViewModel2;
 
       @KeepFieldType
       HomeViewModel com_marcos_quizapplication_ui_viewmodel_HomeViewModel2;
-
-      @KeepFieldType
-      LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
