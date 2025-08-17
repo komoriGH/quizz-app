@@ -1,6 +1,7 @@
 package com.marcos.quizapplication.di;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.marcos.quizapplication.domain.contracts.AuthRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
@@ -27,21 +28,26 @@ import javax.inject.Provider;
 public final class AuthModule_ProvideAuthRepositoryFactory implements Factory<AuthRepository> {
   private final Provider<FirebaseAuth> firebaseAuthProvider;
 
-  public AuthModule_ProvideAuthRepositoryFactory(Provider<FirebaseAuth> firebaseAuthProvider) {
+  private final Provider<FirebaseFirestore> firestoreProvider;
+
+  public AuthModule_ProvideAuthRepositoryFactory(Provider<FirebaseAuth> firebaseAuthProvider,
+      Provider<FirebaseFirestore> firestoreProvider) {
     this.firebaseAuthProvider = firebaseAuthProvider;
+    this.firestoreProvider = firestoreProvider;
   }
 
   @Override
   public AuthRepository get() {
-    return provideAuthRepository(firebaseAuthProvider.get());
+    return provideAuthRepository(firebaseAuthProvider.get(), firestoreProvider.get());
   }
 
   public static AuthModule_ProvideAuthRepositoryFactory create(
-      Provider<FirebaseAuth> firebaseAuthProvider) {
-    return new AuthModule_ProvideAuthRepositoryFactory(firebaseAuthProvider);
+      Provider<FirebaseAuth> firebaseAuthProvider, Provider<FirebaseFirestore> firestoreProvider) {
+    return new AuthModule_ProvideAuthRepositoryFactory(firebaseAuthProvider, firestoreProvider);
   }
 
-  public static AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth) {
-    return Preconditions.checkNotNullFromProvides(AuthModule.INSTANCE.provideAuthRepository(firebaseAuth));
+  public static AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth,
+      FirebaseFirestore firestore) {
+    return Preconditions.checkNotNullFromProvides(AuthModule.INSTANCE.provideAuthRepository(firebaseAuth, firestore));
   }
 }

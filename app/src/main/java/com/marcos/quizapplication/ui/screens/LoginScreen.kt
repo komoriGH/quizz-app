@@ -4,20 +4,25 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+// import androidx.compose.foundation.layout.Row // Not strictly needed for the current layout
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-// import androidx.compose.foundation.text.ClickableText // Mantenha se for usar para "Esqueceu a senha?" etc.
+// import androidx.compose.foundation.text.ClickableText // Mantenha se for usar
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-// import androidx.compose.material3.Checkbox // Não usado no código fornecido
+// import androidx.compose.material3.Checkbox // Não usado
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton // Para um estilo diferente para o botão de registro
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+// import androidx.compose.material3.MaterialTheme // Not strictly needed for this file's direct composables
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,14 +52,13 @@ import com.marcos.quizapplication.ui.viewmodel.LoginUiState
 fun LoginScreen(
     uiState: LoginUiState,
     onSignInClick: (String, String) -> Unit,
-    onSignUpClick: () -> Unit, // Alterado: não recebe mais email/password
+    onSignUpClick: () -> Unit,
     onErrorMessageShown: () -> Unit,
     onLoginSuccess: () -> Unit
-    // onRegistrationSuccess callback foi removido
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    // var rememberMe by remember { mutableStateOf(false) } // Não estava sendo usado
+    var passwordVisible by remember { mutableStateOf(false) } // Estado para visibilidade da senha
 
     val context = LocalContext.current
 
@@ -70,9 +75,6 @@ fun LoginScreen(
         }
     }
 
-    // LaunchedEffect para uiState.registrationSuccess foi removido,
-    // pois essa lógica agora pertencerá à RegistrationScreen e seu ViewModel.
-
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -82,7 +84,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome to QuizMaster",
+                text = "Welcome to\nQuizMaster",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start,
@@ -115,13 +117,28 @@ fun LoginScreen(
                 label = { Text("Password") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                enabled = !uiState.isLoading
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+                enabled = !uiState.isLoading,
+                trailingIcon = {
+                    val image = if (passwordVisible)
+                        Icons.Filled.Visibility
+                    else
+                        Icons.Filled.VisibilityOff
 
-            Spacer(modifier = Modifier.height(24.dp))
+                    val description = if (passwordVisible) "Hide password" else "Show password"
+
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = image, description)
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp)) // Este Spacer controla o espaço APÓS o campo de senha
+
+            // Se você quiser um espaço antes do botão "Sign in", ele estaria aqui.
+            // O Spacer(modifier = Modifier.height(24.dp)) foi removido na última atualização, 
+            // se precisar de mais espaço antes dos botões, adicione um novo aqui.
+            // Exemplo: Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = { onSignInClick(email, password) },
@@ -135,16 +152,16 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedButton(
-                onClick = onSignUpClick, // Alterado: chamada direta sem passar email/password
+                onClick = onSignUpClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                enabled = !uiState.isLoading, // Email/password não são mais relevantes para habilitar este botão aqui
+                enabled = !uiState.isLoading,
                 colors = ButtonDefaults.outlinedButtonColors()
             ) {
                 Text("Sign up", fontSize = 16.sp)
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            // Spacer(modifier = Modifier.height(16.dp)) // Removido na última atualização; adicione se desejar mais espaço na parte inferior
         }
 
         if (uiState.isLoading) {
@@ -159,9 +176,8 @@ fun LoginScreenPreview() {
     LoginScreen(
         uiState = LoginUiState(isLoading = false),
         onSignInClick = { _, _ -> },
-        onSignUpClick = {}, // Alterado para corresponder à nova assinatura
+        onSignUpClick = {},
         onErrorMessageShown = {},
         onLoginSuccess = {}
-        // onRegistrationSuccess = {} // Removido
     )
 }

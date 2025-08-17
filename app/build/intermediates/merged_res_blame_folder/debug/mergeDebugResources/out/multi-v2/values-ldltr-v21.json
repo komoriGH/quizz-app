@@ -4,7 +4,7 @@
             "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-81:/values-ldltr-v21/values-ldltr-v21.xml",
             "map": [
                 {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\eabe35f1035c2efc13deb5437ebf385f\\transformed\\appcompat-1.6.1\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\0950dea84d278e531ffb544ee764cc69\\transformed\\appcompat-1.6.1\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

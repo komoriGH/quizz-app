@@ -4,7 +4,17 @@
             "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-81:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\eabe35f1035c2efc13deb5437ebf385f\\transformed\\appcompat-1.6.1\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\dc3f46ae5b5746889b7eaf7a9955ba2e\\transformed\\core-splashscreen-1.0.1\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,129,205,280,357,428,496,566",
+                        "endColumns": "73,75,74,76,70,67,69,67",
+                        "endOffsets": "124,200,275,352,423,491,561,629"
+                    }
+                },
+                {
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\0950dea84d278e531ffb544ee764cc69\\transformed\\appcompat-1.6.1\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",
@@ -20,16 +30,6 @@
                         "endLines": "12,15,18",
                         "endColumns": "12,12,12",
                         "endOffsets": "788,959,1132"
-                    }
-                },
-                {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\b763013f34520975f961d626f43af1ea\\transformed\\core-splashscreen-1.0.1\\res\\values-watch-v20\\values-watch-v20.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,129,205,280,357,428,496,566",
-                        "endColumns": "73,75,74,76,70,67,69,67",
-                        "endOffsets": "124,200,275,352,423,491,561,629"
                     }
                 }
             ]

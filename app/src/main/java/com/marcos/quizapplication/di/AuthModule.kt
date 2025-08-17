@@ -1,6 +1,7 @@
 package com.marcos.quizapplication.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore // Importar FirebaseFirestore
 import com.marcos.quizapplication.authentication.FirebaseAuthRepositoryImpl
 import com.marcos.quizapplication.domain.contracts.AuthRepository
 import dagger.Module
@@ -19,7 +20,15 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
-        return FirebaseAuthRepositoryImpl(firebaseAuth)
+    fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance() // ADICIONADO AQUI
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore // ADICIONADO AQUI
+    ): AuthRepository {
+        // Passar firestore para o construtor
+        return FirebaseAuthRepositoryImpl(firebaseAuth, firestore) // MODIFICADO AQUI
     }
 }

@@ -14,7 +14,7 @@ import com.marcos.quizapplication.ui.screens.RegistrationScreen
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel
 import com.marcos.quizapplication.ui.viewmodel.LoginViewModel
 import com.marcos.quizapplication.ui.viewmodel.QuizViewModel
-import com.marcos.quizapplication.ui.viewmodel.RegistrationUiState // Importe se não estiver já
+// import com.marcos.quizapplication.ui.viewmodel.RegistrationUiState // No longer needed if RegistrationUiState is only in ViewModel
 import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel
 
 sealed class Screen(val route: String) {
@@ -57,14 +57,13 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(route = Screen.Registration.route) {
             val registrationViewModel: RegistrationViewModel = hiltViewModel()
-            // Assumindo que seu RegistrationViewModel expõe um uiState e um método onErrorMessageShown
-            // Se os nomes forem diferentes, ajuste aqui.
             val uiState by registrationViewModel.uiState.collectAsStateWithLifecycle()
 
             RegistrationScreen(
-                uiState = uiState, // Passando o uiState
-                onRegisterClick = { email, password, confirmPassword ->
-                    registrationViewModel.signUp(email, password, confirmPassword)
+                uiState = uiState, 
+                // Updated onRegisterClick to include username
+                onRegisterClick = { username, email, password, confirmPassword ->
+                    registrationViewModel.signUp(username, email, password, confirmPassword)
                 },
                 onRegistrationSuccess = {
                     navController.navigate(Screen.Login.route) {
@@ -73,13 +72,12 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
                         }
                         launchSingleTop = true
                     }
-                    // Chame um método no ViewModel se precisar limpar o estado após o sucesso
-                    // registrationViewModel.onRegistrationHandled() ou similar
+                    registrationViewModel.onRegistrationHandled()
                 },
                 onNavigateBack = {
                     navController.popBackStack()
                 },
-                onErrorMessageShown = registrationViewModel::onErrorMessageShown // Passando o callback
+                onErrorMessageShown = registrationViewModel::onErrorMessageShown
             )
         }
 
