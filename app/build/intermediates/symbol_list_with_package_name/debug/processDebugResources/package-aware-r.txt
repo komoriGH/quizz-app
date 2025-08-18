@@ -3107,6 +3107,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_profile_placeholder
 drawable ic_search_black_24
 drawable icon_background
 drawable indeterminate_static
@@ -3313,6 +3314,7 @@ id clip_horizontal
 id clip_vertical
 id clockwise
 id closest
+id coil_request_manager
 id collapseActionView
 id compose_view_saveable_id_tag
 id compress

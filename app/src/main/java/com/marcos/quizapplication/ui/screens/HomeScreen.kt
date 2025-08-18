@@ -84,10 +84,9 @@ val sampleQuizzes = listOf(
 fun HomeScreen(
     userName: String,
     onLogout: () -> Unit,
-    onStartQuizClick: (quizId: String) -> Unit
-    // Adicionar callbacks para Profile e Settings se for implementá-los agora
-    // onProfileClick: () -> Unit,
-    // onSettingsClick: () -> Unit
+    onStartQuizClick: (quizId: String) -> Unit,
+    onProfileClick: () -> Unit // PARÂMETRO ADICIONADO
+
 ) {
     var showMenu by remember { mutableStateOf(false) } // Estado para controlar a visibilidade do menu
 
@@ -108,9 +107,8 @@ fun HomeScreen(
                         DropdownMenuItem(
                             text = { Text("Profile") },
                             onClick = {
-                                // onProfileClick() // Chamar a função de callback se tiver
                                 showMenu = false
-                                // TODO: Implementar navegação para tela de perfil ou ação
+                                onProfileClick() // CALLBACK CHAMADO
                             },
                             leadingIcon = {
                                 Icon(
@@ -311,7 +309,8 @@ fun HomeScreenPreview() {
         HomeScreen(
             userName = "John Doe",
             onLogout = {},
-            onStartQuizClick = {}
+            onStartQuizClick = {},
+            onProfileClick = {} // ADICIONADO AO PREVIEW
             // onProfileClick = {},
             // onSettingsClick = {}
         )

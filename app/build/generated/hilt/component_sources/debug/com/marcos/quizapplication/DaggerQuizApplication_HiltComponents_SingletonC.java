@@ -10,9 +10,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.marcos.quizapplication.di.AuthModule_ProvideAuthRepositoryFactory;
 import com.marcos.quizapplication.di.AuthModule_ProvideFirebaseAuthFactory;
 import com.marcos.quizapplication.di.AuthModule_ProvideFirebaseFirestoreFactory;
+import com.marcos.quizapplication.di.AuthModule_ProvideFirebaseStorageFactory;
 import com.marcos.quizapplication.domain.contracts.AuthRepository;
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel;
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel_HiltModules;
@@ -20,6 +22,8 @@ import com.marcos.quizapplication.ui.viewmodel.LoginViewModel;
 import com.marcos.quizapplication.ui.viewmodel.LoginViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.MainViewModel;
 import com.marcos.quizapplication.ui.viewmodel.MainViewModel_HiltModules;
+import com.marcos.quizapplication.ui.viewmodel.ProfileViewModel;
+import com.marcos.quizapplication.ui.viewmodel.ProfileViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel;
 import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel_HiltModules;
 import dagger.hilt.android.ActivityRetainedLifecycle;
@@ -384,7 +388,7 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(ImmutableMap.<String, Boolean>of(LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_LoginViewModel, LoginViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_MainViewModel, MainViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel, RegistrationViewModel_HiltModules.KeyModule.provide()));
+      return LazyClassKeyMap.<Boolean>of(ImmutableMap.<String, Boolean>of(LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_LoginViewModel, LoginViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_MainViewModel, MainViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_ProfileViewModel, ProfileViewModel_HiltModules.KeyModule.provide(), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel, RegistrationViewModel_HiltModules.KeyModule.provide()));
     }
 
     @Override
@@ -404,22 +408,27 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_marcos_quizapplication_ui_viewmodel_MainViewModel = "com.marcos.quizapplication.ui.viewmodel.MainViewModel";
+
       static String com_marcos_quizapplication_ui_viewmodel_HomeViewModel = "com.marcos.quizapplication.ui.viewmodel.HomeViewModel";
+
+      static String com_marcos_quizapplication_ui_viewmodel_ProfileViewModel = "com.marcos.quizapplication.ui.viewmodel.ProfileViewModel";
 
       static String com_marcos_quizapplication_ui_viewmodel_LoginViewModel = "com.marcos.quizapplication.ui.viewmodel.LoginViewModel";
 
-      static String com_marcos_quizapplication_ui_viewmodel_MainViewModel = "com.marcos.quizapplication.ui.viewmodel.MainViewModel";
-
       static String com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel = "com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel";
+
+      @KeepFieldType
+      MainViewModel com_marcos_quizapplication_ui_viewmodel_MainViewModel2;
 
       @KeepFieldType
       HomeViewModel com_marcos_quizapplication_ui_viewmodel_HomeViewModel2;
 
       @KeepFieldType
-      LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
+      ProfileViewModel com_marcos_quizapplication_ui_viewmodel_ProfileViewModel2;
 
       @KeepFieldType
-      MainViewModel com_marcos_quizapplication_ui_viewmodel_MainViewModel2;
+      LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
 
       @KeepFieldType
       RegistrationViewModel com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel2;
@@ -439,6 +448,8 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     private Provider<MainViewModel> mainViewModelProvider;
 
+    private Provider<ProfileViewModel> profileViewModelProvider;
+
     private Provider<RegistrationViewModel> registrationViewModelProvider;
 
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
@@ -457,12 +468,13 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
       this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
       this.loginViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
       this.mainViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
-      this.registrationViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.profileViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.registrationViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(ImmutableMap.<String, javax.inject.Provider<ViewModel>>of(LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_HomeViewModel, ((Provider) homeViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_LoginViewModel, ((Provider) loginViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_MainViewModel, ((Provider) mainViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel, ((Provider) registrationViewModelProvider)));
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(ImmutableMap.<String, javax.inject.Provider<ViewModel>>of(LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_HomeViewModel, ((Provider) homeViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_LoginViewModel, ((Provider) loginViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_MainViewModel, ((Provider) mainViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_ProfileViewModel, ((Provider) profileViewModelProvider), LazyClassKeyProvider.com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel, ((Provider) registrationViewModelProvider)));
     }
 
     @Override
@@ -472,16 +484,15 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_marcos_quizapplication_ui_viewmodel_MainViewModel = "com.marcos.quizapplication.ui.viewmodel.MainViewModel";
-
       static String com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel = "com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel";
 
       static String com_marcos_quizapplication_ui_viewmodel_HomeViewModel = "com.marcos.quizapplication.ui.viewmodel.HomeViewModel";
 
+      static String com_marcos_quizapplication_ui_viewmodel_MainViewModel = "com.marcos.quizapplication.ui.viewmodel.MainViewModel";
+
       static String com_marcos_quizapplication_ui_viewmodel_LoginViewModel = "com.marcos.quizapplication.ui.viewmodel.LoginViewModel";
 
-      @KeepFieldType
-      MainViewModel com_marcos_quizapplication_ui_viewmodel_MainViewModel2;
+      static String com_marcos_quizapplication_ui_viewmodel_ProfileViewModel = "com.marcos.quizapplication.ui.viewmodel.ProfileViewModel";
 
       @KeepFieldType
       RegistrationViewModel com_marcos_quizapplication_ui_viewmodel_RegistrationViewModel2;
@@ -490,7 +501,13 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
       HomeViewModel com_marcos_quizapplication_ui_viewmodel_HomeViewModel2;
 
       @KeepFieldType
+      MainViewModel com_marcos_quizapplication_ui_viewmodel_MainViewModel2;
+
+      @KeepFieldType
       LoginViewModel com_marcos_quizapplication_ui_viewmodel_LoginViewModel2;
+
+      @KeepFieldType
+      ProfileViewModel com_marcos_quizapplication_ui_viewmodel_ProfileViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -523,7 +540,10 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
           case 2: // com.marcos.quizapplication.ui.viewmodel.MainViewModel 
           return (T) new MainViewModel(singletonCImpl.provideAuthRepositoryProvider.get());
 
-          case 3: // com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel 
+          case 3: // com.marcos.quizapplication.ui.viewmodel.ProfileViewModel 
+          return (T) new ProfileViewModel(singletonCImpl.provideAuthRepositoryProvider.get());
+
+          case 4: // com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel 
           return (T) new RegistrationViewModel(singletonCImpl.provideAuthRepositoryProvider.get());
 
           default: throw new AssertionError(id);
@@ -608,6 +628,8 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
 
     private Provider<FirebaseFirestore> provideFirebaseFirestoreProvider;
 
+    private Provider<FirebaseStorage> provideFirebaseStorageProvider;
+
     private Provider<AuthRepository> provideAuthRepositoryProvider;
 
     private SingletonCImpl() {
@@ -620,6 +642,7 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
     private void initialize() {
       this.provideFirebaseAuthProvider = DoubleCheck.provider(new SwitchingProvider<FirebaseAuth>(singletonCImpl, 1));
       this.provideFirebaseFirestoreProvider = DoubleCheck.provider(new SwitchingProvider<FirebaseFirestore>(singletonCImpl, 2));
+      this.provideFirebaseStorageProvider = DoubleCheck.provider(new SwitchingProvider<FirebaseStorage>(singletonCImpl, 3));
       this.provideAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AuthRepository>(singletonCImpl, 0));
     }
 
@@ -657,13 +680,16 @@ public final class DaggerQuizApplication_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.marcos.quizapplication.domain.contracts.AuthRepository 
-          return (T) AuthModule_ProvideAuthRepositoryFactory.provideAuthRepository(singletonCImpl.provideFirebaseAuthProvider.get(), singletonCImpl.provideFirebaseFirestoreProvider.get());
+          return (T) AuthModule_ProvideAuthRepositoryFactory.provideAuthRepository(singletonCImpl.provideFirebaseAuthProvider.get(), singletonCImpl.provideFirebaseFirestoreProvider.get(), singletonCImpl.provideFirebaseStorageProvider.get());
 
           case 1: // com.google.firebase.auth.FirebaseAuth 
           return (T) AuthModule_ProvideFirebaseAuthFactory.provideFirebaseAuth();
 
           case 2: // com.google.firebase.firestore.FirebaseFirestore 
           return (T) AuthModule_ProvideFirebaseFirestoreFactory.provideFirebaseFirestore();
+
+          case 3: // com.google.firebase.storage.FirebaseStorage 
+          return (T) AuthModule_ProvideFirebaseStorageFactory.provideFirebaseStorage();
 
           default: throw new AssertionError(id);
         }

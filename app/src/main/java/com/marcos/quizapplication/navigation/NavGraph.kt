@@ -9,12 +9,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.marcos.quizapplication.ui.screens.HomeScreen
 import com.marcos.quizapplication.ui.screens.LoginScreen
+import com.marcos.quizapplication.ui.screens.ProfileScreen // IMPORTAR ProfileScreen
 import com.marcos.quizapplication.ui.screens.QuizRoute
 import com.marcos.quizapplication.ui.screens.RegistrationScreen
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel
 import com.marcos.quizapplication.ui.viewmodel.LoginViewModel
+// ProfileViewModel será injetado em ProfileScreen, não precisa importar aqui diretamente
+// a menos que você precise dele para outra coisa no NavGraph.
 import com.marcos.quizapplication.ui.viewmodel.QuizViewModel
-// import com.marcos.quizapplication.ui.viewmodel.RegistrationUiState // No longer needed if RegistrationUiState is only in ViewModel
 import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel
 
 sealed class Screen(val route: String) {
@@ -24,6 +26,7 @@ sealed class Screen(val route: String) {
         fun createRoute(quizId: String) = "quiz_screen/$quizId"
     }
     object Registration : Screen("registration_screen")
+    object Profile : Screen("profile_screen") // ADICIONADA NOVA ROTA
 }
 
 @Composable
@@ -50,7 +53,6 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
                         }
                         launchSingleTop = true
                     }
-                    // loginViewModel.onLoginSuccessShown()
                 }
             )
         }
@@ -60,8 +62,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
             val uiState by registrationViewModel.uiState.collectAsStateWithLifecycle()
 
             RegistrationScreen(
-                uiState = uiState, 
-                // Updated onRegisterClick to include username
+                uiState = uiState,
                 onRegisterClick = { username, email, password, confirmPassword ->
                     registrationViewModel.signUp(username, email, password, confirmPassword)
                 },
@@ -83,21 +84,19 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
 
         composable(route = Screen.Home.route) {
             val homeViewModel: HomeViewModel = hiltViewModel()
-            val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+            val user by homeViewModel.user.collectAsStateWithLifecycle()
+            // val isLoading by homeViewModel.isLoading.collectAsStateWithLifecycle() // Descomente se precisar
 
             HomeScreen(
-                userName = uiState.userName,
+                userName = user?.username ?: "",
                 onLogout = {
-                    homeViewModel.onLogout()
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Home.route) {
-                            inclusive = true
-                        }
-                        launchSingleTop = true
-                    }
+                    homeViewModel.logout()
                 },
                 onStartQuizClick = { quizId ->
                     navController.navigate(Screen.Quiz.createRoute(quizId))
+                },
+                onProfileClick = { // ADICIONADA AÇÃO DE NAVEGAÇÃO
+                    navController.navigate(Screen.Profile.route)
                 }
             )
         }
@@ -116,6 +115,13 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
                     }
                 }
             )
+        }
+
+        // ADICIONADO NOVO COMPOSABLE PARA PROFILESCREEN
+        composable(route = Screen.Profile.route) {
+            // ProfileViewModel é injetado pelo Hilt dentro de ProfileScreen,
+            // então não precisamos instanciá-lo ou passá-lo aqui.
+            ProfileScreen()
         }
     }
 }

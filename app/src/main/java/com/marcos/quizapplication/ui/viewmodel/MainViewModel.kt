@@ -12,5 +12,6 @@ class MainViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    val authState: StateFlow<AuthState> = authRepository.getAuthState()
+    // MODIFICADO AQUI: authRepository.getAuthState() para authRepository.authState
+    val authState: StateFlow<AuthState> = authRepository.authState
 }

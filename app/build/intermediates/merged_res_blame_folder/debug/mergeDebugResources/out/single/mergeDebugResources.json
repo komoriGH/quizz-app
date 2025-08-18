@@ -1,74 +1,82 @@
 [
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/layout_activity_home.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/layout/activity_home.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-anydpi\\ic_launcher.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\drawable_ic_launcher_background.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/drawable/ic_launcher_background.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.marcos.quizapplication.app-debug-84:/drawable_ic_profile_placeholder.xml.flat",
+        "source": "com.marcos.quizapplication.app-main-86:/drawable/ic_profile_placeholder.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/drawable/ic_launcher_foreground.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-anydpi\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/layout_activity_login.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/layout/activity_login.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\layout_activity_login.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\layout\\activity_login.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/xml_data_extraction_rules.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/xml/data_extraction_rules.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\drawable_ic_profile_placeholder.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\drawable\\ic_profile_placeholder.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-debug-83:/xml_backup_rules.xml.flat",
-        "source": "com.marcos.quizapplication.app-main-85:/xml/backup_rules.xml"
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\xml_backup_rules.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\layout_activity_home.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-debug-84:\\xml_data_extraction_rules.xml.flat",
+        "source": "E:\\Android\\.gradle\\daemon\\8.9\\com.marcos.quizapplication.app-main-86:\\xml\\data_extraction_rules.xml"
     }
 ]

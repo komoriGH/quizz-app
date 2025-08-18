@@ -1,10 +1,21 @@
 {
     "logs": [
         {
-            "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-81:/values-v23/values-v23.xml",
+            "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-82:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\74e2ae5bce6ac45f912388cc1a517e7b\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\706f6191722f6d5cff43544a66957c40\\transformed\\appcompat-1.6.1\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,190,325,400,487,1225,1975,2094,2221,2443,2667,2782,2889,3002",
+                        "endLines": "2,3,4,5,19,33,34,35,38,42,43,44,45,49",
+                        "endColumns": "134,134,74,86,12,12,118,126,12,12,114,106,112,12",
+                        "endOffsets": "185,320,395,482,1220,1970,2089,2216,2438,2662,2777,2884,2997,3227"
+                    }
+                },
+                {
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\3f50c8f7cdc7c43341e208de28427342\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +34,7 @@
                     }
                 },
                 {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\276c2355f758234d6df39aee23932db3\\transformed\\material-1.12.0\\res\\values-v23\\values-v23.xml",
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\d8017dca3fc63795ed90c5349793a96b\\transformed\\material-1.12.0\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,5,9,13,16,19,22,25,28,32",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
@@ -39,17 +50,6 @@
                         "endLines": "55,59,63,66,69,72,75,78,82,86",
                         "endColumns": "10,10,10,10,10,10,10,10,10,10",
                         "endOffsets": "3593,3735,3896,4106,4313,4520,4723,4925,5190,5463"
-                    }
-                },
-                {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\0950dea84d278e531ffb544ee764cc69\\transformed\\appcompat-1.6.1\\res\\values-v23\\values-v23.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,190,325,400,487,1225,1975,2094,2221,2443,2667,2782,2889,3002",
-                        "endLines": "2,3,4,5,19,33,34,35,38,42,43,44,45,49",
-                        "endColumns": "134,134,74,86,12,12,118,126,12,12,114,106,112,12",
-                        "endOffsets": "185,320,395,482,1220,1970,2089,2216,2438,2662,2777,2884,2997,3227"
                     }
                 }
             ]

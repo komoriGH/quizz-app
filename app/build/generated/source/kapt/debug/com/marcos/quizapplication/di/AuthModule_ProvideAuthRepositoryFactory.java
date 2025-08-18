@@ -2,6 +2,7 @@ package com.marcos.quizapplication.di;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.marcos.quizapplication.domain.contracts.AuthRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
@@ -30,24 +31,28 @@ public final class AuthModule_ProvideAuthRepositoryFactory implements Factory<Au
 
   private final Provider<FirebaseFirestore> firestoreProvider;
 
+  private final Provider<FirebaseStorage> storageProvider;
+
   public AuthModule_ProvideAuthRepositoryFactory(Provider<FirebaseAuth> firebaseAuthProvider,
-      Provider<FirebaseFirestore> firestoreProvider) {
+      Provider<FirebaseFirestore> firestoreProvider, Provider<FirebaseStorage> storageProvider) {
     this.firebaseAuthProvider = firebaseAuthProvider;
     this.firestoreProvider = firestoreProvider;
+    this.storageProvider = storageProvider;
   }
 
   @Override
   public AuthRepository get() {
-    return provideAuthRepository(firebaseAuthProvider.get(), firestoreProvider.get());
+    return provideAuthRepository(firebaseAuthProvider.get(), firestoreProvider.get(), storageProvider.get());
   }
 
   public static AuthModule_ProvideAuthRepositoryFactory create(
-      Provider<FirebaseAuth> firebaseAuthProvider, Provider<FirebaseFirestore> firestoreProvider) {
-    return new AuthModule_ProvideAuthRepositoryFactory(firebaseAuthProvider, firestoreProvider);
+      Provider<FirebaseAuth> firebaseAuthProvider, Provider<FirebaseFirestore> firestoreProvider,
+      Provider<FirebaseStorage> storageProvider) {
+    return new AuthModule_ProvideAuthRepositoryFactory(firebaseAuthProvider, firestoreProvider, storageProvider);
   }
 
   public static AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth,
-      FirebaseFirestore firestore) {
-    return Preconditions.checkNotNullFromProvides(AuthModule.INSTANCE.provideAuthRepository(firebaseAuth, firestore));
+      FirebaseFirestore firestore, FirebaseStorage storage) {
+    return Preconditions.checkNotNullFromProvides(AuthModule.INSTANCE.provideAuthRepository(firebaseAuth, firestore, storage));
   }
 }

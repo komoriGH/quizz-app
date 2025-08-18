@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-81:/values-v27/values-v27.xml",
+            "outputFile": "com.marcos.quizapplication.app-mergeDebugResources-82:/values-v27/values-v27.xml",
             "map": [
                 {
-                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\dc3f46ae5b5746889b7eaf7a9955ba2e\\transformed\\core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
+                    "source": "E:\\Android\\.gradle\\caches\\8.9\\transforms\\2f2aa17af83a71b87147ab2e64754a5f\\transformed\\core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
                     "from": {
                         "startLines": "2,3,4,7",
                         "startColumns": "4,4,4,4",

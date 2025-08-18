@@ -4,6 +4,7 @@ import com.marcos.quizapplication.di.AuthModule;
 import com.marcos.quizapplication.ui.viewmodel.HomeViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.LoginViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.MainViewModel_HiltModules;
+import com.marcos.quizapplication.ui.viewmodel.ProfileViewModel_HiltModules;
 import com.marcos.quizapplication.ui.viewmodel.RegistrationViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
@@ -161,6 +162,7 @@ public final class QuizApplication_HiltComponents {
           HomeViewModel_HiltModules.KeyModule.class,
           LoginViewModel_HiltModules.KeyModule.class,
           MainViewModel_HiltModules.KeyModule.class,
+          ProfileViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class,
           RegistrationViewModel_HiltModules.KeyModule.class
@@ -203,6 +205,7 @@ public final class QuizApplication_HiltComponents {
           HomeViewModel_HiltModules.BindsModule.class,
           LoginViewModel_HiltModules.BindsModule.class,
           MainViewModel_HiltModules.BindsModule.class,
+          ProfileViewModel_HiltModules.BindsModule.class,
           RegistrationViewModel_HiltModules.BindsModule.class
       }
   )

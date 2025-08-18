@@ -1,10 +1,10 @@
 [
     {
-        "merged": "com.marcos.quizapplication.app-mergeDebugResources-82:/layout/activity_login.xml",
-        "source": "com.marcos.quizapplication.app-main-85:/layout/activity_login.xml"
+        "merged": "com.marcos.quizapplication.app-mergeDebugResources-83:/layout/activity_login.xml",
+        "source": "com.marcos.quizapplication.app-main-86:/layout/activity_login.xml"
     },
     {
-        "merged": "com.marcos.quizapplication.app-mergeDebugResources-82:/layout/activity_home.xml",
-        "source": "com.marcos.quizapplication.app-main-85:/layout/activity_home.xml"
+        "merged": "com.marcos.quizapplication.app-mergeDebugResources-83:/layout/activity_home.xml",
+        "source": "com.marcos.quizapplication.app-main-86:/layout/activity_home.xml"
     }
 ]

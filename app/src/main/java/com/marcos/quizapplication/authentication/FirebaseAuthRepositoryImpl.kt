@@ -1,142 +1,140 @@
 package com.marcos.quizapplication.authentication
 
-import android.util.Log
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.marcos.quizapplication.domain.contracts.AuthRepository
 import com.marcos.quizapplication.domain.contracts.AuthState
 import com.marcos.quizapplication.domain.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseAuthRepositoryImpl(
-    private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+class FirebaseAuthRepositoryImpl @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore,
+    private val storage: FirebaseStorage
 ) : AuthRepository {
 
-    private val _authState = MutableStateFlow(AuthState(isInitialLoading = true))
+    private val _authState = MutableStateFlow<AuthState>(AuthState.InitialLoading)
+    override val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
     init {
-        firebaseAuth.addAuthStateListener { auth ->
-            val firebaseUser = auth.currentUser
-            if (firebaseUser != null) {
-                // User is signed in, fetch username from Firestore
-                firestore.collection("users").document(firebaseUser.uid).get()
-                    .addOnSuccessListener { document ->
-                        val usernameFromFirestore = if (document != null && document.exists()) {
-                            document.getString("username")
-                        } else {
-                            null
-                        }
-                        _authState.update {
-                            it.copy(
-                                user = firebaseUser.toDomainUser(usernameFromFirestore),
-                                isInitialLoading = false
-                            )
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("FirebaseAuthRepo", "Error fetching user details from Firestore", e)
-                        // Still update with auth user, but username might be missing
-                        _authState.update {
-                            it.copy(
-                                user = firebaseUser.toDomainUser(null), // Username fetch failed
-                                isInitialLoading = false
-                            )
-                        }
-                    }
+        auth.addAuthStateListener { firebaseAuth ->
+            val firebaseUser = firebaseAuth.currentUser
+            if (firebaseUser == null) {
+                _authState.value = AuthState.Unauthenticated
             } else {
-                // User is signed out
-                _authState.update {
-                    it.copy(
-                        user = null,
-                        isInitialLoading = false
-                    )
-                }
+                // Usuário logado, buscar dados do Firestore.
+                // Considerar emitir um AuthState.Loading aqui se a operação for longa
+                firestore.collection("users").document(firebaseUser.uid).get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        if (documentSnapshot.exists()) {
+                            val user = firebaseUser.toDomainUser(
+                                usernameFromFirestore = documentSnapshot.getString("username"),
+                                photoUrlFromFirestore = documentSnapshot.getString("photoUrl")
+                            )
+                            _authState.value = AuthState.Authenticated(user)
+                        } else {
+                            // Usuário autenticado no Firebase, mas sem registro no Firestore.
+                            // Isso pode ser um estado de erro ou um usuário parcialmente configurado.
+                            _authState.value = AuthState.Error("User data not found in Firestore for UID: ${firebaseUser.uid}. Please complete sign up or contact support.")
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        _authState.value = AuthState.Error("Failed to fetch user data: ${exception.message}")
+                    }
             }
         }
     }
 
-    override fun getAuthState(): StateFlow<AuthState> = _authState.asStateFlow()
-
     override suspend fun signUp(username: String, email: String, password: String): Result<Unit> {
         return try {
-            // 1. Check username uniqueness in Firestore
-            val usernameQuery = firestore.collection("users")
-                .whereEqualTo("username", username)
-                .get()
-                .await()
-
-            if (!usernameQuery.isEmpty) {
-                Log.w("FirebaseAuthRepo", "Sign up failed: Username already taken.")
-                return Result.failure(Exception("Username already taken. Please choose another one."))
-            }
-
-            // 2. If username is unique, create user in Auth
-            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            val createdFirebaseUser = authResult.user
-
-            if (createdFirebaseUser != null) {
-                // 3. Save username and UID (and email) in Firestore
-                val userDocument = mapOf(
-                    "uid" to createdFirebaseUser.uid,
-                    "username" to username,
-                    "email" to email
-                )
-                firestore.collection("users").document(createdFirebaseUser.uid)
-                    .set(userDocument)
-                    .await()
-                // Update authState immediately after successful signup and Firestore write
-                _authState.update {
-                    it.copy(
-                        user = createdFirebaseUser.toDomainUser(username),
-                        isInitialLoading = false // Should already be false, but good to ensure
-                    )
-                }
+            val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+            val firebaseUser = authResult.user
+            if (firebaseUser != null) {
+                // Inicialmente sem photoUrl, será null
+                val user = User(uid = firebaseUser.uid, email = email, username = username, photoUrl = null)
+                firestore.collection("users").document(firebaseUser.uid).set(user).await()
+                // O listener de authState irá capturar o novo usuário e emitir AuthState.Authenticated
                 Result.success(Unit)
             } else {
-                Result.failure(Exception("Failed to create user account (Firebase Auth user is null)."))
+                Result.failure(Exception("Firebase user is null after sign up."))
             }
-        } catch (e: FirebaseAuthUserCollisionException) {
-            Log.w("FirebaseAuthRepo", "Sign up failed: Email already in use.", e)
-            Result.failure(Exception("The email address is already in use by another account."))
-        } catch (e: FirebaseAuthWeakPasswordException) {
-            Log.w("FirebaseAuthRepo", "Sign up failed: Weak password.", e)
-            Result.failure(Exception("The password is too weak. It should be at least 6 characters."))
-        } catch (e: Exception) { // Catches Firestore exceptions as well
-            Log.e("FirebaseAuthRepo", "Sign up failed: ${e.message}", e)
-            Result.failure(Exception("An unexpected error occurred during sign up: ${e.message}"))
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
     override suspend fun signIn(email: String, password: String): Result<Unit> {
         return try {
-            firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            // AuthState will be updated by the addAuthStateListener
+            auth.signInWithEmailAndPassword(email, password).await()
+            // O listener de authState irá capturar o login e emitir o estado apropriado
             Result.success(Unit)
         } catch (e: Exception) {
-            Log.w("FirebaseAuthRepo", "Sign in failed", e)
             Result.failure(e)
         }
     }
 
     override fun signOut() {
-        firebaseAuth.signOut()
-        // AuthState will be updated by the addAuthStateListener
+        auth.signOut()
+        // O listener de authState irá capturar o logout e emitir AuthState.Unauthenticated
     }
-}
 
-// Updated to accept username from Firestore
-private fun FirebaseUser.toDomainUser(usernameFromFirestore: String?): User {
-    return User(
-        uid = this.uid,
-        email = this.email,
-        username = usernameFromFirestore // Use username from Firestore
-    )
+    override suspend fun updateProfilePicture(imageUriString: String): Result<Unit> {
+        return try {
+            val currentUser = auth.currentUser
+                ?: return Result.failure(Exception("User not authenticated to update profile picture."))
+
+            val imageUri = Uri.parse(imageUriString)
+            val profileImageRef = storage.reference.child("profile_pictures/${currentUser.uid}/profile_image.jpg")
+
+            profileImageRef.putFile(imageUri).await()
+            val downloadUrl = profileImageRef.downloadUrl.await().toString()
+
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setPhotoUri(Uri.parse(downloadUrl))
+                .build()
+            currentUser.updateProfile(profileUpdates).await()
+
+            firestore.collection("users").document(currentUser.uid)
+                .update("photoUrl", downloadUrl)
+                .await()
+            
+            // O listener de authState (no init) deve ser notificado sobre a mudança no currentUser
+            // (se o photoURL do FirebaseUser for atualizado e observado) e/ou
+            // uma nova busca no Firestore pegaria a photoUrl atualizada se o estado fosse reavaliado.
+            // Para garantir que o usuário em AuthState.Authenticated seja o mais recente
+            // após esta operação específica, podemos atualizar o valor explicitamente,
+            // mas isso pode causar uma emissão duplicada se o listener também pegar.
+            // A forma mais reativa é deixar o listener principal lidar com isso.
+            // Se houver problemas com a atualização da UI, podemos forçar aqui:
+            // val updatedUser = currentUser.toDomainUser(
+            //     usernameFromFirestore = (_authState.value as? AuthState.Authenticated)?.user?.username,
+            //     photoUrlFromFirestore = downloadUrl
+            // )
+            // _authState.value = AuthState.Authenticated(updatedUser)
+
+            Result.success(Unit)
+        } catch (e: Exception)
+        {
+            Result.failure(e)
+        }
+    }
+
+    // Função de extensão para converter FirebaseUser para o modelo de domínio User
+    // Mantém a lógica de priorizar dados do Firestore se disponíveis.
+    private fun FirebaseUser.toDomainUser(usernameFromFirestore: String?, photoUrlFromFirestore: String?): User {
+        return User(
+            uid = this.uid,
+            email = this.email, // Email do Firebase Auth é geralmente confiável
+            username = usernameFromFirestore ?: this.displayName ?: "N/A", // Prioriza Firestore, depois Firebase Auth displayName
+            photoUrl = photoUrlFromFirestore ?: this.photoUrl?.toString() // Prioriza Firestore, depois Firebase Auth photo URL
+        )
+    }
 }

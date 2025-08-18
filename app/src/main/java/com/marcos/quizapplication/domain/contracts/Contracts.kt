@@ -1,11 +1,11 @@
 package com.marcos.quizapplication.domain.contracts
 
-// Importar o User do pacote 'model'
 import com.marcos.quizapplication.domain.model.User
 
-// A data class User que estava aqui (contracts.User) foi removida.
-
-data class AuthState(
-    val user: User? = null, // Agora 'User' se refere a com.marcos.quizapplication.domain.model.User
-    val isInitialLoading: Boolean = true
-)
+sealed interface AuthState {
+    object InitialLoading : AuthState // Para substituir o isInitialLoading
+    data class Authenticated(val user: User) : AuthState
+    object Unauthenticated : AuthState
+    data class Error(val message: String) : AuthState
+    // Você pode adicionar outros estados se necessário, como 'Loading' para operações.
+}
